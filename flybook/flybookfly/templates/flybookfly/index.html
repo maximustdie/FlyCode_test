@@ -1,0 +1,32 @@
+{% extends "flybookfly/base.html" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+    <h2>Список доступных книг</h2>
+
+    {% if books %}
+
+        <table>
+            <thead><th>Книги</th><th>Авторы</th></thead>
+            {% for book in books %}
+                {% if book.archived is False %}
+                    <tr>
+                        <td><a href="{{ book.get_absolute_url }}">{{book.title}}</a></td>
+                        <td>
+                            {% for author in book.author.all %}
+                                <a href="{% url 'author_detail_url' author.slug %}">{{author.first_name}} {{author.last_name}}</a>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <p>No book are available.</p>
+    {% endif %}
+{% endblock %}

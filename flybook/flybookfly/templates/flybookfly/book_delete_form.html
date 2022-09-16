@@ -1,0 +1,20 @@
+{% extends "flybookfly/base.html" %}
+
+{% block title %}
+    Удаление книги {{ book.title }}
+{% endblock %}
+
+{% block content %}
+
+    <h2>Удаление книги</h2>
+
+    <form action="{% url 'book_delete_url' slug=book.slug %}" method="post">
+        {% csrf_token %}
+
+        <p>Вы уверены, что хотите удалить книгу <b>{{ book.title }}</b>?</p>
+        <a href="{% url 'book_detail_url' slug=book.slug %}">Отмена</a>
+        <button type="submit" name="button">Удалить</button>
+
+    </form>
+
+{% endblock %}

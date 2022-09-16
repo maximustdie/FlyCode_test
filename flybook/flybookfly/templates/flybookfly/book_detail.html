@@ -1,0 +1,56 @@
+{% extends "flybookfly/base.html" %}
+
+{% block title %}
+    {{ book.title }}
+{% endblock %}
+
+{% block content %}
+
+    <div>
+
+        <h2>{{ book.title }}</h2>
+        <h3>
+            {% for author in book.author.all %}
+                        {{author.first_name}} {{author.last_name}}
+            {% endfor %}
+        </h3>
+
+        <p>{{ book.annotation }}</p>
+
+        {% if book.archived is True %}
+            <p><b>Книга занесена в архив</b></p>
+        {% endif %}
+
+        <p>
+            <a href="{% url 'book_update_url' book.slug %}">Изменить книгу</a>
+            <a href="{% url 'book_delete_url' book.slug %}">Удалить книгу</a>
+        </p>
+
+    </div>
+
+    <div>
+        <h3>Комментарии:</h3>
+
+        {% if not book.comments.all %}
+            <p>Здесь пока нет комментариев. Напишите первый... Ну или первой... Я не сексист.</p>
+        {% endif %}
+
+        <a href="{% url 'add_comment_url' book.slug %}">Добавить комментарий</a>
+        {% for comment in book.comments.all %}
+            <div>
+                <hr>
+                <p>Дата создания: {{ comment.create_time }}</p>
+                <p>Дата обновления: {{ comment.update_time }}</p>
+                <p>Автор комментария: {{ comment.author }}</p>
+                <p>{{ comment.text }}</p>
+                <p>
+                    <a href="{% url 'update_comment_url' book.slug comment.id %}">Изменить комментарий</a>
+                    <a href="{% url 'delete_comment_url' book.slug comment.id %}">Удалить комментарий</a>
+                </p>
+                <hr>
+            </div>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

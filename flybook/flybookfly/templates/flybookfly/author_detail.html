@@ -1,0 +1,23 @@
+{% extends "flybookfly/base.html" %}
+
+{% block title %}
+    Книги. {{ author }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ author }}</h1>
+
+
+    <table>
+        <thead><th>Книги</th></thead>
+        {% for book in author.books.all %}
+            {% if book.archived is False %}
+                <tr>
+                    <td><a href="{{ book.get_absolute_url }}">{{book.title}}</a></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

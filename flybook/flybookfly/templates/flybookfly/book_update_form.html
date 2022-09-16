@@ -1,0 +1,29 @@
+{% extends "flybookfly/base.html" %}
+
+{% block title %}
+    Обновить книгу {{ book.title }}
+{% endblock %}
+
+{% block content %}
+
+    <h2>Изменить данные о книге</h2>
+
+    <form class="" action="{% url 'book_update_url' slug=book.slug %}" method="post">
+        {% csrf_token %}
+
+        {% for fild in form %}
+            <div>
+                {% if fild.errors %}
+                    <div>
+                        {{ fild.errors }}
+                    </div>
+                {% endif %}
+                {{ fild.label }}
+                {{ fild }}
+            </div>
+        {% endfor %}
+
+        <button type="submit" name="button">Обновить книгу</button>
+    </form>
+
+{% endblock %}

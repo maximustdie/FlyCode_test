@@ -1,0 +1,31 @@
+{% extends "flybookfly/base.html" %}
+
+{% block title %}
+    Создать книгу
+{% endblock %}
+
+{% block content %}
+
+    <h2>Добавить книгу</h2>
+
+    <form class="" action="{% url 'book_create_url' %}" method="post">
+        {% csrf_token %}
+
+        {% for fild in form %}
+            <div>
+
+                {% if fild.errors %}
+                    <div>
+                        {{ fild.errors }}
+                    </div>
+                {% endif %}
+                {{ fild.label }}
+                {{ fild }}
+
+            </div>
+        {% endfor %}
+
+        <button type="submit" name="button">Создать книгу</button>
+    </form>
+
+{% endblock %}
